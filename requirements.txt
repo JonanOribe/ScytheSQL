@@ -1,1 +1,8 @@
-pytest
+pytest==7.3.1
+numpy==1.24.3
+pandas==2.0.1
+matplotlib==3.7.1
+pytesseract==0.3.10
+opencv-python==4.7.0.72
+Jinja2==3.1.2
+openpyxl==3.1.2
