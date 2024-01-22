@@ -11,8 +11,8 @@ except ImportError:
 import pytesseract
 
 #read your file
-#file=r'./table.png'
-file=r'./sqlExample.png'
+#file='./src/table.png'
+file='./src/sqlExample.png'
 img = cv2.imread(file,0)
 img.shape
 
@@ -21,7 +21,7 @@ thresh,img_bin = cv2.threshold(img,128,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
 #inverting the image 
 img_bin = 255-img_bin
-cv2.imwrite('./cv_inverted.png',img_bin)
+cv2.imwrite('./src/cv_inverted.png',img_bin)
 #Plotting the image to see the output
 plotting = plt.imshow(img_bin,cmap='gray')
 plt.show()
@@ -38,7 +38,7 @@ kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
 #Use vertical kernel to detect and save the vertical lines in a jpg
 image_1 = cv2.erode(img_bin, ver_kernel, iterations=3)
 vertical_lines = cv2.dilate(image_1, ver_kernel, iterations=3)
-cv2.imwrite("./vertical.jpg",vertical_lines)
+cv2.imwrite("./src/vertical.jpg",vertical_lines)
 #Plot the generated image
 plotting = plt.imshow(image_1,cmap='gray')
 plt.show()
@@ -46,7 +46,7 @@ plt.show()
 #Use horizontal kernel to detect and save the horizontal lines in a jpg
 image_2 = cv2.erode(img_bin, hor_kernel, iterations=3)
 horizontal_lines = cv2.dilate(image_2, hor_kernel, iterations=3)
-cv2.imwrite("./horizontal.jpg",horizontal_lines)
+cv2.imwrite("./src/horizontal.jpg",horizontal_lines)
 #Plot the generated image
 plotting = plt.imshow(image_2,cmap='gray')
 plt.show()
@@ -56,7 +56,7 @@ img_vh = cv2.addWeighted(vertical_lines, 0.5, horizontal_lines, 0.5, 0.0)
 #Eroding and thesholding the image
 img_vh = cv2.erode(~img_vh, kernel, iterations=2)
 thresh, img_vh = cv2.threshold(img_vh,128,255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-cv2.imwrite("./img_vh.jpg", img_vh)
+cv2.imwrite("./src/img_vh.jpg", img_vh)
 bitxor = cv2.bitwise_xor(img,img_vh)
 bitnot = cv2.bitwise_not(bitxor)
 #Plotting the generated image
@@ -192,4 +192,4 @@ dataframe = pd.DataFrame(arr.reshape(len(row), countcol))
 print(dataframe)
 data = dataframe.style.set_properties(align="left")
 #Converting it in a excel-file
-data.to_excel("./output.xlsx")
+data.to_excel("./src/output.xlsx")
